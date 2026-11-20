@@ -1,0 +1,21 @@
+name: Build Android APK
+on: [workflow_dispatch, push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build RenPy Android APK
+        uses: Ayowel/renpy-build-action@v2
+        with:
+          renpy-version: '8.3.4'
+          build-android: true
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vymorozok-Android-APK
+          path: '**/*.apk'
