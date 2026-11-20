@@ -4,15 +4,19 @@ on: [workflow_dispatch, push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SDL_AUDIODRIVER: dummy
+      SDL_VIDEODRIVER: dummy
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Build RenPy Android APK
-        uses: Ayowel/renpy-build-action@v2
+        uses: ProjectAliceDev/renpy-build-action@master
         with:
-          renpy-version: '8.3.4'
-          build-android: true
+          sdk-version: '8.3.4'
+          project-dir: '.'
+          package: 'android'
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
