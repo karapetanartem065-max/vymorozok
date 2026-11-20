@@ -4,22 +4,27 @@ on: [workflow_dispatch, push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SDL_AUDIODRIVER: dummy
-      SDL_VIDEODRIVER: dummy
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build RenPy Android APK
-        uses: ProjectAliceDev/renpy-build-action@master
-        with:
-          sdk-version: '8.3.4'
-          project-dir: '.'
-          package: 'android'
+      - name: Download RenPy SDK and RAPT
+        run: |
+          VER="8.3.4"
+          BASE="www.renpy.org/dl/$VER"
+          wget -q "https://$BASE/renpy-$VER-sdk.tar.bz2"
+          tar -xjf "renpy-$VER-sdk.tar.bz2"
+          cd "renpy-$VER-sdk"
+          wget -q "https://$BASE/renpy-$VER-rapt.zip"
+          unzip -q "renpy-$VER-rapt.zip"
+
+      - name: Install Android SDK and Build APK
+        run: |
+          cd renpy-8.3.4-sdk
+          yes | ./renpy.sh launcher android_build .. assembleRelease --dest ../apk_out
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Vymorozok-Android-APK
-          path: '**/*.apk'
+          path: 'apk_out/*.apk'
