@@ -1,0 +1,22 @@
+{
+    "build_all": false,
+    "build_market": false,
+    "bundle": false,
+    "icon_name": "Выморозок",
+    "include_pil": false,
+    "include_sqlite": false,
+    "layout": null,
+    "name": "Выморозок",
+    "numeric_version": "1",
+    "orientation": "sensorLandscape",
+    "package": "ru.bytemka.vymorozok",
+    "permissions": [
+        "VIBRATE"
+    ],
+    "source": false,
+    "store": "none",
+    "update_always": true,
+    "update_icons": true,
+    "update_keystores": true,
+    "version": "1.0"
+}
